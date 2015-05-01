@@ -56,7 +56,7 @@ public class KKWeatherDB {
 		if (province != null) {
 			ContentValues values = new ContentValues();
 			values.put("province_name", province.getProvinceName());
-			values.put("province_code", province.getPrivinceCode());
+			values.put("province_code", province.getProvinceCode());
 			db.insert("Province", null, values);
 		}
 	}
@@ -73,7 +73,7 @@ public class KKWeatherDB {
 				Province province = new Province();
 				province.setId(cursor.getInt(cursor.getColumnIndex("id")));
 				province.setProvinceName(cursor.getString(cursor.getColumnIndex("province_name")));
-				province.setPrivinceCode(cursor.getString(cursor.getColumnIndex("province_code")));
+				province.setProvinceCode(cursor.getString(cursor.getColumnIndex("province_code")));
 				list.add(province);
 			} while (cursor.moveToNext());
 		}
