@@ -88,15 +88,17 @@ public class Utility {
 	解析服务器返回的JSON数据，并将解析出的数据存储到本地。
 	*/
 	public static void handleWeatherResponse(Context context,String response){
+//		System.out.println("----->"+response);
 		try {
 			JSONObject jsonObject =new JSONObject(response);
-			JSONObject weatherInfo = jsonObject.getJSONObject("weatherInfo");
+			JSONObject weatherInfo = jsonObject.getJSONObject("weatherinfo");
 			String cityName = weatherInfo.getString("city");
-			String weatherCode = weatherInfo.getString("cityId");
+			String weatherCode = weatherInfo.getString("cityid");
 			String temp1 = weatherInfo.getString("temp1");
 			String temp2 = weatherInfo.getString("temp2");
 			String weatherDesp = weatherInfo.getString("weather");
 			String publishTime = weatherInfo.getString("ptime");
+			System.out.println("------>>>"+publishTime);
 			saveWeatherInfo(context,cityName,weatherCode,temp1,temp2,weatherDesp,publishTime);
 		} catch (JSONException e) {
 			// TODO: handle exception
@@ -119,8 +121,8 @@ public class Utility {
 		editor.putString("weather_code", weatherCode);
 		editor.putString("temp1", temp1);
 		editor.putString("temp2", temp2);
-		editor.putString("weatherDesp", weatherDesp);
-		editor.putString("publishTime", publishTime);
+		editor.putString("weather_desp", weatherDesp);
+		editor.putString("publish_time", publishTime);
 		editor.putString("current_date", time.format(new Date()));
 		editor.commit();
 	}

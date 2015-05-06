@@ -61,11 +61,19 @@ public class WeatherActivty extends Activity {
 		qureyFromServer(address,"countyCode");
 	}
 	
+	
+	private void queryWeatherInfo(String weatherCode) {
+		// TODO Auto-generated method stub
+		String address = "http://www.weather.com.cn/data/cityinfo/"+weatherCode+".html";
+		qureyFromServer(address, "weatherCode");
+	}
+	
 	/*
 	根据传入的地址和类型去服务器查询天气代号或天气信息
 	*/
 	private void qureyFromServer(final String address, final String type) {
 		// TODO Auto-generated method stub
+		System.out.println("----->>"+address);
 		HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
 			
 			@Override
@@ -92,11 +100,7 @@ public class WeatherActivty extends Activity {
 				}
 			}
 			
-			private void queryWeatherInfo(String weatherCode) {
-				// TODO Auto-generated method stub
-				String address = "http://www.weather.com.cn/data/list3/city"+weatherCode+".html";
-				qureyFromServer(address, "weatherCode");
-			}
+			
 
 			@Override
 			public void onError(Exception e) {
