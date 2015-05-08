@@ -60,18 +60,12 @@ public class ChooseAreaAcitity extends Activity {
 	 * 当前选中的级别
 	 */
 	private int currentLevel;
+	
+	private boolean fromWeatherActivity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		SharedPreferences pr = PreferenceManager.getDefaultSharedPreferences(this);
-		if (pr.getBoolean("city_selected", false)) {
-			Intent intent = new Intent(this,WeatherActivty.class);
-			startActivity(intent);
-			finish();
-			return;
-		}
-		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(com.kkweather.app.R.layout.choose_area);
 		listView = (ListView) findViewById(com.kkweather.app.R.id.list_view);
@@ -80,6 +74,14 @@ public class ChooseAreaAcitity extends Activity {
 				android.R.layout.simple_list_item_1, dataList);
 		listView.setAdapter(adapter);
 		kkWeatherDB = KKWeatherDB.getInstance(this);
+		fromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity", false);
+		SharedPreferences pr = PreferenceManager.getDefaultSharedPreferences(this);
+		if (pr.getBoolean("city_selected", false) && !fromWeatherActivity ) {
+			Intent intent = new Intent(this,WeatherActivty.class);
+			startActivity(intent);
+			finish();
+			return;
+		}
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -269,6 +271,10 @@ public class ChooseAreaAcitity extends Activity {
 		} else if (currentLevel == LEVEL_CITI){
 			queryProvinces();
 		}else {
+			if (fromWeatherActivity) {
+				Intent intent = new Intent(this,WeatherActivty.class);
+				startActivity(intent);
+			}
 			finish();
 		}
 	}
